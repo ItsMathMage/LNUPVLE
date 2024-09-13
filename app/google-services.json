@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "924165781059",
+    "project_id": "lnup-vle",
+    "storage_bucket": "lnup-vle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924165781059:android:b46a7cf32fd1dafc9646f6",
+        "android_client_info": {
+          "package_name": "com.example.lnupvle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfQYKS5tC0j2pBfaDlKqSGELhfB1Q4x8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
