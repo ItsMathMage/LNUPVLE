@@ -1,6 +1,37 @@
 <resources>
     <string name="app_name">LNUP VLE</string>
-    <string name="test">Test</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="back_button">Назад</string>
+    <string name="save_button">Зберегти</string>
+    <string name="login_label">Увійти</string>
+    <string name="email_label">Email</string>
+    <string name="input_email_hint">Введіть ваш email</string>
+    <string name="password_label">Пароль</string>
+    <string name="input_password_hint">Введіть ваш пароль</string>
+    <string name="login_button">Увійти</string>
+    <string name="or_label">Або</string>
+    <string name="register_button">Зареєструватися</string>
+    <string name="reset_label">Забули пароль?</string>
+    <string name="update_button">Оновити</string>
+    <string name="input_data_register_label">Введіть дані для реєстації:</string>
+    <string name="register_label">Реєстрація</string>
+    <string name="input_firstname_hint">Введіть ваше ім\'я</string>
+    <string name="input_lastname_hint">Введіть ваше прізвище</string>
+    <string name="input_phone_hint">Введіть ваш номер телефону</string>
+    <string name="input_passwordcheck_hint">Введіть ваш пароль повторно</string>
+    <string name="register">Реєстрація</string>
+    <string name="reset">Відновлення</string>
+    <string name="email_for_reset_label">Введіть пошту для відновлення паролю</string>
+    <string name="reset_button">Відновити</string>
+    <string name="settings_label">Налаштування</string>
+    <string name="data_user_label">Дані акаунту:</string>
+    <string name="your_firstname_hint">Ваше ім\'я</string>
+    <string name="your_lastname_hint">Ваше прізвище</string>
+    <string name="your_email_hint">Ваш email</string>
+    <string name="your_phone_hint">Ваш номер телефону</string>
+    <string name="your_password_hint">Ваш пароль</string>
+    <string name="your_uid_hint">Ваш id</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_label">Навчання</string>
 </resources>

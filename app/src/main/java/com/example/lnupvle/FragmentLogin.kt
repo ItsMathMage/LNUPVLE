@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -43,24 +45,26 @@ class FragmentLogin : Fragment() {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
         navController = findNavController()
-        val buttonToRegister = view.findViewById<Button>(R.id.button_to_register)
 
-        buttonToRegister.setOnClickListener {
+        val emailField = view.findViewById<EditText>(R.id.email_field)
+        val passwordField = view.findViewById<EditText>(R.id.password_field)
+
+        val buttonLogin = view.findViewById<Button>(R.id.login_button)
+        val buttonToRegister = view.findViewById<Button>(R.id.button_to_register)
+        val toResetPassword = view.findViewById<TextView>(R.id.to_reset_password)
+
+        buttonLogin.setOnClickListener() {
+            navController.navigate(R.id.action_Login_to_Main)
+        }
+
+        buttonToRegister.setOnClickListener() {
             navController.navigate(R.id.action_Login_to_Register)
         }
 
-        return view
-    }
+        toResetPassword.setOnClickListener() {
+            navController.navigate(R.id.action_Login_to_Reset)
+        }
 
-    companion object {
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentLogin().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        return view
     }
 }

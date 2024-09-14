@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_Login_to_Register"
             app:destination="@id/fragmentRegister" />
+        <action
+            android:id="@+id/action_Login_to_Reset"
+            app:destination="@id/fragmentReset" />
+        <action
+            android:id="@+id/action_Login_to_Main"
+            app:destination="@id/fragmentMain" />
     </fragment>
     <fragment
         android:id="@+id/fragmentRegister"
@@ -21,6 +27,24 @@
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_Register_to_Login"
+            app:destination="@id/fragmentLogin" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentReset"
+        android:name="com.example.lnupvle.FragmentReset"
+        android:label="fragment_reset"
+        tools:layout="@layout/fragment_reset" >
+        <action
+            android:id="@+id/action_Reset_to_Login"
+            app:destination="@id/fragmentLogin" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMain"
+        android:name="com.example.lnupvle.FragmentMain"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_Main_to_Login"
             app:destination="@id/fragmentLogin" />
     </fragment>
 </navigation>

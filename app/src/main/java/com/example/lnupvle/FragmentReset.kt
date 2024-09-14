@@ -17,15 +17,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [FragmentRegister.newInstance] factory method to
+ * Use the [FragmentReset.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentRegister : Fragment() {
+class FragmentReset : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var navController: NavController
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,30 +40,23 @@ class FragmentRegister : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_register, container, false)
+        val view = inflater.inflate(R.layout.fragment_reset, container, false)
 
         navController = findNavController()
 
-        val firstnameField = view.findViewById<EditText>(R.id.firstname_field)
-        val lastnameField = view.findViewById<EditText>(R.id.lastname_field)
         val emailField = view.findViewById<EditText>(R.id.email_field)
-        val phoneField = view.findViewById<EditText>(R.id.phone_field)
-        val passwordField = view.findViewById<EditText>(R.id.password_field)
-        val repeatField = view.findViewById<EditText>(R.id.repeat_field)
 
-        val buttonToLogin = view.findViewById<Button>(R.id.button_to_login)
-        val registerButton = view.findViewById<Button>(R.id.register_button)
+        val buttonToBack = view.findViewById<Button>(R.id.to_back_button)
+        val buttonReset = view.findViewById<Button>(R.id.reset_button)
 
-        buttonToLogin.setOnClickListener() {
-            navController.navigate(R.id.action_Register_to_Login)
+        buttonToBack.setOnClickListener() {
+            navController.navigate(R.id.action_Reset_to_Login)
         }
 
-        registerButton.setOnClickListener() {
-            
+        buttonReset.setOnClickListener() {
+
         }
 
         return view
     }
-
-
 }
