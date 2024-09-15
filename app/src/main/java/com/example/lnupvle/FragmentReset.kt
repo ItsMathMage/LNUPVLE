@@ -7,8 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
+import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +33,7 @@ class FragmentReset : Fragment() {
     private var param2: String? = null
 
     lateinit var navController: NavController
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +62,24 @@ class FragmentReset : Fragment() {
         }
 
         buttonReset.setOnClickListener() {
+            auth = FirebaseAuth.getInstance()
+            auth.sendPasswordResetEmail(emailField.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful)
+                    {
+                        showToast("Лист для скидання паролю відправлено")
+                        navController.navigate(R.id.action_Reset_to_Login)
 
+                    } else {
+                        showToast("Виникла помилка при відправці листа")
+                    }
+                }
         }
 
         return view
+    }
+
+    fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
