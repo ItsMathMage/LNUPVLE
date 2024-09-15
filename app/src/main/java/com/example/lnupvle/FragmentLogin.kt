@@ -1,6 +1,5 @@
 package com.example.lnupvle
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,11 +10,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.core.Context
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,8 +58,8 @@ class FragmentLogin : Fragment() {
             authUser(email, password)
         }
 
-        val emailField = view.findViewById<EditText>(R.id.email_field)
-        val passwordField = view.findViewById<EditText>(R.id.password_field)
+        val emailField = view.findViewById<EditText>(R.id.lesson_id_field)
+        val passwordField = view.findViewById<EditText>(R.id.password_lesson_field)
 
         val buttonLogin = view.findViewById<Button>(R.id.login_button)
         val buttonToRegister = view.findViewById<Button>(R.id.button_to_register)

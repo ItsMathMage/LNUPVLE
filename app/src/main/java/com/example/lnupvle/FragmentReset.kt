@@ -10,12 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,7 +47,7 @@ class FragmentReset : Fragment() {
 
         navController = findNavController()
 
-        val emailField = view.findViewById<EditText>(R.id.email_field)
+        val emailField = view.findViewById<EditText>(R.id.lesson_id_field)
 
         val buttonToBack = view.findViewById<Button>(R.id.to_back_button)
         val buttonReset = view.findViewById<Button>(R.id.reset_button)

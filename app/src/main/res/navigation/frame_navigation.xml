@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_navigation"
+    app:startDestination="@id/fragmentStart">
+
+    <fragment
+        android:id="@+id/fragmentStart"
+        android:name="com.example.lnupvle.FragmentStart"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_Start_to_CreateLesson"
+            app:destination="@id/fragmentCreateLesson" />
+        <action
+            android:id="@+id/action_Start_to_FindLesson"
+            app:destination="@id/fragmentFindLesson" />
+        <action
+            android:id="@+id/action_Start_to_Lesson"
+            app:destination="@id/fragmentLesson" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentFindLesson"
+        android:name="com.example.lnupvle.FragmentFindLesson"
+        android:label="fragment_find_lesson"
+        tools:layout="@layout/fragment_find_lesson" >
+        <action
+            android:id="@+id/action_FindLesson_to_Start"
+            app:destination="@id/fragmentStart" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCreateLesson"
+        android:name="com.example.lnupvle.FragmentCreateLesson"
+        android:label="fragment_create_lesson"
+        tools:layout="@layout/fragment_create_lesson" >
+        <action
+            android:id="@+id/action_CreateLesson_to_Start"
+            app:destination="@id/fragmentStart" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentLesson"
+        android:name="com.example.lnupvle.FragmentLesson"
+        android:label="fragment_lesson"
+        tools:layout="@layout/fragment_lesson" >
+        <action
+            android:id="@+id/action_Lesson_to_Start"
+            app:destination="@id/fragmentStart" />
+    </fragment>
+</navigation>

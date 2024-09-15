@@ -34,4 +34,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="main_label">Навчання</string>
+    <string name="list_lessons_label">Список доданих предметів:</string>
+    <string name="button_find_lesson_label">Знайти предмет</string>
+    <string name="button_create_lesson_label">Створити предмет</string>
+    <string name="find_lesson_label">Введіть дані предмету щоб розпочати навчання:</string>
+    <string name="input_id_lesson_label">Введіть номер предмету</string>
+    <string name="input_password_lesson_label">Введіть пароль</string>
+    <string name="find_button_label">Знайти предмет</string>
+    <string name="create_lesson_label">Введіть дані для створення предмету:</string>
+    <string name="lesson_name_field">Введіть назву предмету</string>
+    <string name="lesson_info_field">Введіть короткий опис</string>
+    <string name="lesson_id_field">Прийдумайте ідентифікатор</string>
+    <string name="lesson_group_field">Введіть назву групи</string>
+    <string name="lesson_password_field">lesson_password_field</string>
+    <string name="lesson_repeat_field">Повторіть пароль доступу</string>
+    <string name="lesson_create_button">Створити</string>
 </resources>
