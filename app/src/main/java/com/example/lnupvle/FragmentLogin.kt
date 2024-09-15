@@ -68,7 +68,12 @@ class FragmentLogin : Fragment() {
         buttonLogin.setOnClickListener() {
             val email = emailField.text.toString()
             val password = passwordField.text.toString()
-            authUser(email, password)
+
+            if (email.isEmpty() || password.isEmpty()) {
+                showToast("Введіть усі дані")
+            } else {
+                authUser(email, password)
+            }
         }
 
         buttonToRegister.setOnClickListener() {

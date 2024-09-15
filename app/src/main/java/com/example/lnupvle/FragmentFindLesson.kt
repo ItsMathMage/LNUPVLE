@@ -6,8 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.credentials.PasswordCredential
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +50,9 @@ class FragmentFindLesson : Fragment() {
 
         frameNav = findNavController()
 
+        val lessonIdField = view.findViewById<EditText>(R.id.lesson_id_field)
+        val lessonPasswordField = view.findViewById<EditText>(R.id.lesson_password_field)
+
         val toBackButton = view.findViewById<Button>(R.id.to_back_button)
         val findLessonButton = view.findViewById<Button>(R.id.find_lesson_button)
 
@@ -51,9 +61,55 @@ class FragmentFindLesson : Fragment() {
         }
 
         findLessonButton.setOnClickListener() {
+            val lessonId = lessonIdField.text.toString()
+            val lessonPassword = lessonPasswordField.text.toString()
+
+            if (lessonId.isEmpty() || lessonPassword.isEmpty()) {
+                showToast("Введіть усі дані")
+            } else {
+                addLesson(lessonId, lessonPassword)
+            }
 
         }
 
         return view
+    }
+
+    fun addLesson (lessonId: String, lessonPassword: String) {
+        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+        val uid = userPref.getString("UID", "").toString()
+
+        val databaseRef = FirebaseDatabase.getInstance().getReference("app")
+        val lessonRef = databaseRef.child("lessons").child(lessonId)
+
+        lessonRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val lesson = dataSnapshot.getValue(Lesson::class.java)
+
+                    if (lesson != null) {
+                        if (lessonPassword == lesson.lessonPassword) {
+                            val userAccessRef = databaseRef.child("access").child(uid).child(lessonId)
+                            val access = Access(uid, lessonId, lesson.lessonName, lesson.lessonTeacher)
+                            userAccessRef.setValue(access)
+                            showToast("Предмет додано успішно")
+                            frameNav = findNavController()
+                            frameNav.navigate(R.id.action_FindLesson_to_Start)
+                        }
+                    }
+                } else {
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+
+    }
+
+    fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

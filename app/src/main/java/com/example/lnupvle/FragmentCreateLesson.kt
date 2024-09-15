@@ -7,8 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,11 +64,62 @@ class FragmentCreateLesson : Fragment() {
         }
 
         createLessonButton.setOnClickListener() {
-            
+
+            val lessonName = lessonNameField.text.toString()
+            val lessonInfo = lessonInfoField.text.toString()
+            val lessonId = lessonIdField.text.toString()
+            val lessonGroup = lessonGroupField.text.toString()
+            val lessonPassword = lessonPasswordField.text.toString()
+            val lessonRepeat = lessonRepeatField.text.toString()
+
+            if ((listOf(lessonName, lessonInfo, lessonId, lessonGroup, lessonPassword, lessonRepeat).any { it.isEmpty() })) {
+                showToast("Заповніть усі поля")
+            } else if (lessonPassword != lessonRepeat) {
+                showToast("Паролі не співпадають")
+            } else {
+                createLesson(lessonName, lessonInfo, lessonId, lessonGroup, lessonPassword)
+            }
         }
 
         return view
     }
 
+    fun createLesson (lessonName: String, lessonInfo: String, lessonId: String, lessonGroup: String, lessonPassword: String) {
+        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+        val uid = userPref.getString("UID", "").toString()
+
+        val databaseRef = FirebaseDatabase.getInstance().getReference("app")
+        val userRef = databaseRef.child("users").child(uid)
+        val lessonRef = databaseRef.child("lessons").child(lessonId)
+
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val user = dataSnapshot.getValue(User::class.java)
+
+                    if (user != null) {
+                        val lessonTeacher = "${user.firstname} ${user.lastname}"
+                        val lessonData = Lesson(lessonName, lessonInfo, lessonId, lessonGroup, lessonPassword, lessonTeacher)
+
+                        lessonRef.setValue(lessonData)
+
+                        showToast("Предмет успішно створено")
+                        frameNav.navigate(R.id.action_CreateLesson_to_Start)
+
+                    }
+                } else {
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
+
+    fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
 
 }

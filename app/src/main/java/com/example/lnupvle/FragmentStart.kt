@@ -6,8 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +33,10 @@ class FragmentStart : Fragment() {
     private var param2: String? = null
 
     private lateinit var frameNav: NavController
+
+    private lateinit var databaseRef: DatabaseReference
+    private lateinit var lessonsRecyclerView: RecyclerView
+    private lateinit var lessonsArrayList: ArrayList<Access>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +58,13 @@ class FragmentStart : Fragment() {
         val toFindLessonButton = view.findViewById<Button>(R.id.to_find_lesson_button)
         val toCreateLessonButton = view.findViewById<Button>(R.id.to_create_lesson_button)
 
+        lessonsArrayList = arrayListOf<Access>()
+        lessonsRecyclerView = view.findViewById(R.id.lessons_list)
+        lessonsRecyclerView.layoutManager = LinearLayoutManager(context)
+        lessonsRecyclerView.setHasFixedSize(true)
+
+        getLessonData()
+
         toFindLessonButton.setOnClickListener() {
             frameNav.navigate(R.id.action_Start_to_FindLesson)
         }
@@ -55,5 +74,36 @@ class FragmentStart : Fragment() {
         }
 
         return view
+    }
+
+    fun getLessonData() {
+        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+        val uid = userPref.getString("UID", "").toString()
+
+        databaseRef = FirebaseDatabase.getInstance().getReference("app")
+        val lessonAccessRef = databaseRef.child("access").child(uid)
+
+        lessonAccessRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (lessonSnapshot in dataSnapshot.children) {
+                        val lesson = lessonSnapshot.getValue(Access::class.java)
+                        lessonsArrayList.add(lesson!!)
+                    }
+
+                    lessonsRecyclerView.adapter = LessonAdapter(lessonsArrayList, frameNav, requireActivity())
+                } else {
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
+
+    fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

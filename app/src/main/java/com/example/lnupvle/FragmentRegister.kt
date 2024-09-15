@@ -50,12 +50,12 @@ class FragmentRegister : Fragment() {
 
         navController = findNavController()
 
-        val firstnameField = view.findViewById<EditText>(R.id.lesson_name_field)
-        val lastnameField = view.findViewById<EditText>(R.id.lesson_info_field)
-        val emailField = view.findViewById<EditText>(R.id.lesson_id_field)
-        val phoneField = view.findViewById<EditText>(R.id.group_name_field)
-        val passwordField = view.findViewById<EditText>(R.id.password_lesson_field)
-        val repeatField = view.findViewById<EditText>(R.id.repeat_lesson_field)
+        val firstnameField = view.findViewById<EditText>(R.id.firstname_field)
+        val lastnameField = view.findViewById<EditText>(R.id.lastname_field)
+        val emailField = view.findViewById<EditText>(R.id.email_field)
+        val phoneField = view.findViewById<EditText>(R.id.phone_field)
+        val passwordField = view.findViewById<EditText>(R.id.password_field)
+        val repeatField = view.findViewById<EditText>(R.id.repeat_field)
 
         val buttonToLogin = view.findViewById<Button>(R.id.button_to_login)
         val registerButton = view.findViewById<Button>(R.id.register_button)

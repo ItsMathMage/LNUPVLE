@@ -72,7 +72,7 @@ class FragmentMain : Fragment() {
                     val user = dataSnapshot.getValue(User::class.java)
 
                     if (user != null) {
-                        showToast("Вітаємо в застосунку ${user.firstname}")
+
                     }
                 } else {
 

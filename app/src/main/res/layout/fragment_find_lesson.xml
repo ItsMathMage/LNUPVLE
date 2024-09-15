@@ -29,7 +29,7 @@
                 tools:layout_editor_absoluteX="10dp" />
 
             <EditText
-                android:id="@+id/lesson_name_field"
+                android:id="@+id/lesson_id_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -37,14 +37,14 @@
                 android:drawablePadding="8dp"
                 android:hint="@string/input_id_lesson_label"
                 android:imeOptions="actionNext"
-                android:inputType="textPersonName"
+                android:inputType="text"
                 android:lines="1"
                 android:minHeight="48dp"
                 app:layout_constraintTop_toBottomOf="@+id/lesson_create_label"
                 tools:layout_editor_absoluteX="30dp" />
 
             <EditText
-                android:id="@+id/lesson_info_field"
+                android:id="@+id/lesson_password_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -52,10 +52,10 @@
                 android:drawablePadding="8dp"
                 android:hint="@string/input_password_lesson_label"
                 android:imeOptions="actionNext"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:lines="1"
                 android:minHeight="48dp"
-                app:layout_constraintTop_toBottomOf="@+id/lesson_name_field"
+                app:layout_constraintTop_toBottomOf="@+id/lesson_id_field"
                 tools:layout_editor_absoluteX="10dp" />
 
 
