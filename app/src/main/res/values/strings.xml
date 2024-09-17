@@ -50,4 +50,6 @@
     <string name="lesson_repeat_field">Повторіть пароль доступу</string>
     <string name="lesson_create_button">Створити</string>
     <string name="test_text">text : text</string>
+    <string name="create">Створити</string>
+    <string name="list_lectures">Список лекцій:</string>
 </resources>

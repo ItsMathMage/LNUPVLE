@@ -46,5 +46,17 @@
         <action
             android:id="@+id/action_Lesson_to_Start"
             app:destination="@id/fragmentStart" />
+        <action
+            android:id="@+id/action_Lesson_to_LectureEdit"
+            app:destination="@id/fragmentLectureEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentLectureEdit"
+        android:name="com.example.lnupvle.FragmentLectureEdit"
+        android:label="fragment_lecture_edit"
+        tools:layout="@layout/fragment_lecture_edit" >
+        <action
+            android:id="@+id/action_LectureEdit_to_Lesson"
+            app:destination="@id/fragmentLesson" />
     </fragment>
 </navigation>
