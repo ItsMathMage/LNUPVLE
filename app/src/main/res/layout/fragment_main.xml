@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_chat_24" />
+                android:src="@drawable/baseline_chat_24"/>
 
             <ImageButton
                 android:id="@+id/schedule_button"
@@ -96,7 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@color/m500"
+                android:background="@drawable/other_button"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_menu_book_24"
                 android:textColor="@color/black" />

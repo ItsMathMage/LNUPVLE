@@ -1,5 +1,7 @@
 package com.example.lnupvle
 
+import android.content.pm.PackageManager
+import android.Manifest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,7 +45,8 @@ class FragmentLesson : Fragment() {
         val toBackButton = view.findViewById<Button>(R.id.to_back_button)
         val createLectureButton = view.findViewById<Button>(R.id.create_lecture_button)
 
-        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+        val userPref =
+            requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
         val lessonId = userPref.getString("LID", "").toString()
 
         lecturesArrayList = arrayListOf<Lecture>()
@@ -50,6 +55,8 @@ class FragmentLesson : Fragment() {
         lecturesRecyclerView.setHasFixedSize(true)
 
         getLectureData()
+
+        startPerm()
 
         toBackButton.setOnClickListener() {
             frameNav.navigate(R.id.action_Lesson_to_Start)
@@ -64,7 +71,8 @@ class FragmentLesson : Fragment() {
     }
 
     private fun getLectureData() {
-        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+        val userPref =
+            requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
         val lid = userPref.getString("LID", "").toString()
 
         databaseRef = FirebaseDatabase.getInstance().getReference("app")
@@ -78,7 +86,8 @@ class FragmentLesson : Fragment() {
                         lecturesArrayList.add(lecture!!)
                     }
 
-                    lecturesRecyclerView.adapter = LectureAdapter(lecturesArrayList, requireActivity())
+                    lecturesRecyclerView.adapter =
+                        LectureAdapter(lecturesArrayList, requireActivity())
                 } else {
 
                 }
@@ -92,5 +101,45 @@ class FragmentLesson : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1
+
+    private fun startPerm() {
+        if (checkWriteExternalStoragePermission()) {
+
+        } else {
+            requestWriteExternalStoragePermission()
+            showToast("Дозволу нема")
+        }
+    }
+
+    private fun checkWriteExternalStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+    }
+
+    private fun requestWriteExternalStoragePermission() {
+        ActivityCompat.requestPermissions(requireActivity(),
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                showToast("Дозвіл отримано")
+            } else {
+                showToast("Дозвіл невдався")
+            }
+        }
     }
 }
