@@ -9,9 +9,7 @@ class User (
 ) {
     constructor() : this("", "", "", "", "")
 
-    // Конструктор з усіма властивостями класу
     init {
-        // Ініціалізуємо властивості за допомогою переданих параметрів
         this.uid = uid
         this.firstname = firstname
         this.lastname = lastname

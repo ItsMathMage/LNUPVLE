@@ -55,7 +55,7 @@ class LectureAdapter (
             var downloadManager = context.getSystemService(DownloadManager::class.java)
             val request = DownloadManager.Request(url.toUri())
                 .setMimeType("officedocument.wordprocessingml.document")
-                .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
+                .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setTitle("$filename.docx")
                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "$filename.docx")

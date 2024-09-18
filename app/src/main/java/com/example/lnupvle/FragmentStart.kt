@@ -28,7 +28,6 @@ class FragmentStart : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_start, container, false)
 
         frameNav = findNavController()
@@ -54,7 +53,7 @@ class FragmentStart : Fragment() {
         return view
     }
 
-    fun getLessonData() {
+    private fun getLessonData() {
         val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
         val uid = userPref.getString("UID", "").toString()
 
@@ -64,6 +63,7 @@ class FragmentStart : Fragment() {
         lessonAccessRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    lessonsArrayList.clear()
                     for (lessonSnapshot in dataSnapshot.children) {
                         val lesson = lessonSnapshot.getValue(Access::class.java)
                         lessonsArrayList.add(lesson!!)
@@ -81,7 +81,7 @@ class FragmentStart : Fragment() {
         })
     }
 
-    fun showToast(message: String) {
+    private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

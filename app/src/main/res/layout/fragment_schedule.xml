@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FragmentMain">
+    tools:context=".FragmentSchedule">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,16 +15,18 @@
             android:id="@+id/head_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/m500"
-            android:padding="10dp">
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@string/main_label"
+                android:text="Розклад"
                 android:textAlignment="center"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/white"
@@ -54,13 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/head_form"
             app:layout_constraintVertical_bias="0.0">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentFrameView"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/frame_navigation" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -86,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/transparent_button"
+                android:background="@drawable/shaded_button"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_schedule_24"
                 android:textColor="@color/black" />
@@ -96,7 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/shaded_button"
+                android:background="@drawable/transparent_button"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_menu_book_24"
                 android:textColor="@color/black" />

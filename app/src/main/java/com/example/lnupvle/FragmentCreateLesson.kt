@@ -15,36 +15,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentCreateLesson.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentCreateLesson : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var frameNav: NavController
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_create_lesson, container, false)
 
         frameNav = findNavController()
@@ -84,41 +62,45 @@ class FragmentCreateLesson : Fragment() {
         return view
     }
 
-    fun createLesson (lessonName: String, lessonInfo: String, lessonId: String, lessonGroup: String, lessonPassword: String) {
-        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
-        val uid = userPref.getString("UID", "").toString()
+    private fun createLesson (lessonName: String, lessonInfo: String, lessonId: String, lessonGroup: String, lessonPassword: String) {
+        try {
+            val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+            val uid = userPref.getString("UID", "").toString()
 
-        val databaseRef = FirebaseDatabase.getInstance().getReference("app")
-        val userRef = databaseRef.child("users").child(uid)
-        val lessonRef = databaseRef.child("lessons").child(lessonId)
+            val databaseRef = FirebaseDatabase.getInstance().getReference("app")
+            val userRef = databaseRef.child("users").child(uid)
+            val lessonRef = databaseRef.child("lessons").child(lessonId)
 
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val user = dataSnapshot.getValue(User::class.java)
+            userRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        val user = dataSnapshot.getValue(User::class.java)
 
-                    if (user != null) {
-                        val lessonTeacher = "${user.firstname} ${user.lastname}"
-                        val lessonData = Lesson(lessonName, lessonInfo, lessonId, lessonGroup, lessonPassword, lessonTeacher)
+                        if (user != null) {
+                            val lessonTeacher = "${user.firstname} ${user.lastname}"
+                            val lessonData = Lesson(lessonName, lessonInfo, lessonId, lessonGroup, lessonPassword, lessonTeacher)
 
-                        lessonRef.setValue(lessonData)
+                            lessonRef.setValue(lessonData)
 
-                        showToast("Предмет успішно створено")
-                        frameNav.navigate(R.id.action_CreateLesson_to_Start)
+                            showToast("Предмет успішно створено")
+                            frameNav.navigate(R.id.action_CreateLesson_to_Start)
+
+                        }
+                    } else {
 
                     }
-                } else {
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
 
                 }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
+            })
+        } catch (e: Exception) {
+            showToast("Помилка: ${e.message}")
+        }
     }
 
-    fun showToast(message: String) {
+    private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
