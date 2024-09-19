@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/shaded_button"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_chat_24"/>
+                android:src="@drawable/baseline_message_24"/>
 
             <ImageButton
                 android:id="@+id/schedule_button"

@@ -19,61 +19,62 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class FragmentScheduleDays : Fragment() {
+class FragmentDayLectures : Fragment() {
 
     private lateinit var scheduleNav: NavController
     private lateinit var userPref : SharedPreferences
     private lateinit var databaseRef: DatabaseReference
-    private lateinit var daysArrayList: ArrayList<Day>
-    private lateinit var daysRecyclerView: RecyclerView
+    private lateinit var detailsArrayList: ArrayList<Details>
+    private lateinit var detailsRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_schedule_days, container, false)
+        scheduleNav = findNavController()
+
+        val view = inflater.inflate(R.layout.fragment_day_lectures, container, false)
 
         userPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
-        scheduleNav = findNavController()
+        detailsArrayList = arrayListOf<Details>()
+        detailsRecyclerView = view.findViewById(R.id.lectures_list)
+        detailsRecyclerView.layoutManager = LinearLayoutManager(context)
+        detailsRecyclerView.setHasFixedSize(true)
 
-        daysArrayList = arrayListOf<Day>()
-        daysRecyclerView = view.findViewById(R.id.days_list)
-        daysRecyclerView.layoutManager = LinearLayoutManager(context)
-        daysRecyclerView.setHasFixedSize(true)
-
-        getDaysData()
+        getDetailsData()
 
         val toBackButton = view.findViewById<Button>(R.id.to_back_button)
         val toEditButton = view.findViewById<Button>(R.id.to_edit_button)
 
         toBackButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleDays_to_ScheduleMain)
+            scheduleNav.navigate(R.id.action_DayLectures_to_ScheduleDays)
         }
 
         toEditButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleDays_to_DaysEdit)
+            scheduleNav.navigate(R.id.action_DayLectures_to_DetailsEdit)
         }
 
         return view
     }
 
-    private fun getDaysData() {
+    private fun getDetailsData() {
         val sid = userPref.getString("SID", "").toString()
+        val dayName = userPref.getString("DN", "").toString()
         databaseRef = FirebaseDatabase.getInstance().getReference("app")
 
-        val scheduleAccessRef = databaseRef.child("days").child(sid)
+        val detailsRef = databaseRef.child("details").child(sid).child(dayName)
 
-        scheduleAccessRef.addValueEventListener(object : ValueEventListener {
+        detailsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    daysArrayList.clear()
-                    for (daySnapshot in dataSnapshot.children) {
-                        val day = daySnapshot.getValue(Day::class.java)
-                        daysArrayList.add(day!!)
+                    detailsArrayList.clear()
+                    for ( detailsSnapshot in dataSnapshot.children) {
+                        val  details =  detailsSnapshot.getValue(Details::class.java)
+                        detailsArrayList.add( details!!)
                     }
 
-                    daysRecyclerView.adapter = DayAdapter(daysArrayList, scheduleNav, requireActivity())
+                    detailsRecyclerView.adapter = DetailsAdapter(detailsArrayList, scheduleNav, requireActivity())
                 } else {
 
                 }
@@ -88,6 +89,5 @@ class FragmentScheduleDays : Fragment() {
     private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
-
 
 }

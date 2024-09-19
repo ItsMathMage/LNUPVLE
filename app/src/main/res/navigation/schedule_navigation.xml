@@ -46,5 +46,41 @@
         <action
             android:id="@+id/action_ScheduleDays_to_ScheduleMain"
             app:destination="@id/fragmentScheduleMain" />
+        <action
+            android:id="@+id/action_ScheduleDays_to_DaysEdit"
+            app:destination="@id/fragmentDaysEdit" />
+        <action
+            android:id="@+id/action_ScheduleDays_to_DayLectures"
+            app:destination="@id/fragmentDayLectures" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDaysEdit"
+        android:name="com.example.lnupvle.FragmentDaysEdit"
+        android:label="fragment_days_edit"
+        tools:layout="@layout/fragment_days_edit" >
+        <action
+            android:id="@+id/action_DaysEdit_to_ScheduleDays"
+            app:destination="@id/fragmentScheduleDays" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDayLectures"
+        android:name="com.example.lnupvle.FragmentDayLectures"
+        android:label="fragment_day_lectures"
+        tools:layout="@layout/fragment_day_lectures" >
+        <action
+            android:id="@+id/action_DayLectures_to_ScheduleDays"
+            app:destination="@id/fragmentScheduleDays" />
+        <action
+            android:id="@+id/action_DayLectures_to_DetailsEdit"
+            app:destination="@id/fragmentDetailsEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDetailsEdit"
+        android:name="com.example.lnupvle.FragmentDetailsEdit"
+        android:label="fragment_details_edit"
+        tools:layout="@layout/fragment_details_edit" >
+        <action
+            android:id="@+id/action_DetailsEdit_to_DayLectures"
+            app:destination="@id/fragmentDayLectures" />
     </fragment>
 </navigation>
