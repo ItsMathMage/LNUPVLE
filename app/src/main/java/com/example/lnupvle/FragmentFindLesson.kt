@@ -52,7 +52,7 @@ class FragmentFindLesson : Fragment() {
         return view
     }
 
-    fun addLesson (lessonId: String, lessonPassword: String) {
+    private fun addLesson (lessonId: String, lessonPassword: String) {
         try {
             val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
             val uid = userPref.getString("UID", "").toString()
@@ -71,7 +71,6 @@ class FragmentFindLesson : Fragment() {
                                 val access = Access(uid, lessonId, lesson.lessonName, lesson.lessonTeacher)
                                 userAccessRef.setValue(access)
                                 showToast("Предмет додано успішно")
-                                frameNav = findNavController()
                                 frameNav.navigate(R.id.action_FindLesson_to_Start)
                             }
                         }
@@ -87,7 +86,7 @@ class FragmentFindLesson : Fragment() {
         }
     }
 
-    fun showToast(message: String) {
+    private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

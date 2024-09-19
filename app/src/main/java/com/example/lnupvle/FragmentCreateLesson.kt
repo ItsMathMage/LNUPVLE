@@ -84,7 +84,6 @@ class FragmentCreateLesson : Fragment() {
 
                             showToast("Предмет успішно створено")
                             frameNav.navigate(R.id.action_CreateLesson_to_Start)
-
                         }
                     } else {
 

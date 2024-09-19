@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/schedule_navigation"
+    app:startDestination="@id/fragmentScheduleMain">
+
+    <fragment
+        android:id="@+id/fragmentScheduleMain"
+        android:name="com.example.lnupvle.FragmentScheduleMain"
+        android:label="fragment_schedule_main"
+        tools:layout="@layout/fragment_schedule_main" >
+        <action
+            android:id="@+id/action_ScheduleMain_to_ScheduleEdit"
+            app:destination="@id/fragmentScheduleEdit" />
+        <action
+            android:id="@+id/action_ScheduleMain_to_SheduleFind"
+            app:destination="@id/fragmentSheduleFind" />
+        <action
+            android:id="@+id/action_ScheduleMain_to_ScheduleDays"
+            app:destination="@id/fragmentScheduleDays" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentScheduleEdit"
+        android:name="com.example.lnupvle.FragmentScheduleEdit"
+        android:label="fragment_schedule_edit"
+        tools:layout="@layout/fragment_schedule_edit" >
+        <action
+            android:id="@+id/action_ScheduleEdit_to_ScheduleMain"
+            app:destination="@id/fragmentScheduleMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSheduleFind"
+        android:name="com.example.lnupvle.FragmentSheduleFind"
+        android:label="fragment_shedule_find"
+        tools:layout="@layout/fragment_shedule_find" >
+        <action
+            android:id="@+id/action_ScheduleFind_to_ScheduleMain"
+            app:destination="@id/fragmentScheduleMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentScheduleDays"
+        android:name="com.example.lnupvle.FragmentScheduleDays"
+        android:label="fragment_schedule_days"
+        tools:layout="@layout/fragment_schedule_days" >
+        <action
+            android:id="@+id/action_ScheduleDays_to_ScheduleMain"
+            app:destination="@id/fragmentScheduleMain" />
+    </fragment>
+</navigation>
