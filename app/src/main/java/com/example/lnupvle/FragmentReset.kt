@@ -14,8 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class FragmentReset : Fragment() {
 
-    lateinit var navController: NavController
-    lateinit var auth: FirebaseAuth
+    private lateinit var navController: NavController
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

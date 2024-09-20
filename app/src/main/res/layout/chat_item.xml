@@ -8,19 +8,13 @@
     android:layout_margin="5dp">
 
     <LinearLayout
-        android:id="@+id/card_layout"
+        android:id="@+id/chat_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="20dp">
         <TextView
-            android:id="@+id/lesson_name_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/test_text"
-            android:textSize="20dp"/>
-        <TextView
-            android:id="@+id/lesson_teacher_text"
+            android:id="@+id/chat_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/test_text"

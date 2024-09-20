@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chats_navigation"
+    app:startDestination="@id/fragmentChatsMain">
+
+    <fragment
+        android:id="@+id/fragmentChatsMain"
+        android:name="com.example.lnupvle.FragmentChatsMain"
+        android:label="fragment_chats_main"
+        tools:layout="@layout/fragment_chats_main" >
+        <action
+            android:id="@+id/action_ChatsMain_to_ChatsCurrent"
+            app:destination="@id/fragmentChatsCurrent" />
+        <action
+            android:id="@+id/action_ChatsMain_to_ChatsAdd"
+            app:destination="@id/fragmentChatsAdd" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentChatsCurrent"
+        android:name="com.example.lnupvle.FragmentChatsCurrent"
+        android:label="fragment_chats_current"
+        tools:layout="@layout/fragment_chats_current" >
+        <action
+            android:id="@+id/action_ChatsCurrent_to_ChatsMain"
+            app:destination="@id/fragmentChatsMain" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentChatsAdd"
+        android:name="com.example.lnupvle.FragmentChatsAdd"
+        android:label="fragment_chats_add"
+        tools:layout="@layout/fragment_chats_add" >
+        <action
+            android:id="@+id/action_ChatsAdd_to_ChatsMain"
+            app:destination="@id/fragmentChatsMain" />
+    </fragment>
+</navigation>

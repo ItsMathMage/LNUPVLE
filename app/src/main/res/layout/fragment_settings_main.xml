@@ -99,7 +99,7 @@
                             tools:layout_editor_absoluteX="10dp" />
 
                         <EditText
-                            android:id="@+id/setting1_firstname"
+                            android:id="@+id/setting_firstname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
@@ -112,7 +112,7 @@
                             android:minHeight="48dp" />
 
                         <EditText
-                            android:id="@+id/setting1_lastname"
+                            android:id="@+id/setting_lastname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
@@ -125,7 +125,7 @@
                             android:minHeight="48dp" />
 
                         <Button
-                            android:id="@+id/button1_create_details"
+                            android:id="@+id/button_change_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
