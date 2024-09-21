@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentScheduleMain"
-        android:name="com.example.lnupvle.FragmentScheduleMain"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentScheduleMain"
         android:label="fragment_schedule_main"
         tools:layout="@layout/fragment_schedule_main" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentScheduleEdit"
-        android:name="com.example.lnupvle.FragmentScheduleEdit"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentScheduleEdit"
         android:label="fragment_schedule_edit"
         tools:layout="@layout/fragment_schedule_edit" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSheduleFind"
-        android:name="com.example.lnupvle.FragmentSheduleFind"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentSheduleFind"
         android:label="fragment_shedule_find"
         tools:layout="@layout/fragment_shedule_find" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentScheduleDays"
-        android:name="com.example.lnupvle.FragmentScheduleDays"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentScheduleDays"
         android:label="fragment_schedule_days"
         tools:layout="@layout/fragment_schedule_days" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentDaysEdit"
-        android:name="com.example.lnupvle.FragmentDaysEdit"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentDaysEdit"
         android:label="fragment_days_edit"
         tools:layout="@layout/fragment_days_edit" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentDayLectures"
-        android:name="com.example.lnupvle.FragmentDayLectures"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentDayLectures"
         android:label="fragment_day_lectures"
         tools:layout="@layout/fragment_day_lectures" >
         <action
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentDetailsEdit"
-        android:name="com.example.lnupvle.FragmentDetailsEdit"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentDetailsEdit"
         android:label="fragment_details_edit"
         tools:layout="@layout/fragment_details_edit" >
         <action

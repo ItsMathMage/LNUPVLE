@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentStart"
-        android:name="com.example.lnupvle.FragmentStart"
+        android:name="com.example.lnupvle.ui.fragments.lesson.FragmentStart"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentFindLesson"
-        android:name="com.example.lnupvle.FragmentFindLesson"
+        android:name="com.example.lnupvle.ui.fragments.lesson.FragmentFindLesson"
         android:label="fragment_find_lesson"
         tools:layout="@layout/fragment_find_lesson" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateLesson"
-        android:name="com.example.lnupvle.FragmentCreateLesson"
+        android:name="com.example.lnupvle.ui.fragments.lesson.FragmentCreateLesson"
         android:label="fragment_create_lesson"
         tools:layout="@layout/fragment_create_lesson" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentLesson"
-        android:name="com.example.lnupvle.FragmentLesson"
+        android:name="com.example.lnupvle.ui.fragments.lesson.FragmentLesson"
         android:label="fragment_lesson"
         tools:layout="@layout/fragment_lesson" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentLectureEdit"
-        android:name="com.example.lnupvle.FragmentLectureEdit"
+        android:name="com.example.lnupvle.ui.fragments.lesson.FragmentLectureEdit"
         android:label="fragment_lecture_edit"
         tools:layout="@layout/fragment_lecture_edit" >
         <action

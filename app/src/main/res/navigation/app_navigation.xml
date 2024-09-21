@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentLogin"
-        android:name="com.example.lnupvle.FragmentLogin"
+        android:name="com.example.lnupvle.ui.fragments.main.FragmentLogin"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentRegister"
-        android:name="com.example.lnupvle.FragmentRegister"
+        android:name="com.example.lnupvle.ui.fragments.main.FragmentRegister"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentReset"
-        android:name="com.example.lnupvle.FragmentReset"
+        android:name="com.example.lnupvle.ui.fragments.main.FragmentReset"
         android:label="fragment_reset"
         tools:layout="@layout/fragment_reset" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentMain"
-        android:name="com.example.lnupvle.FragmentMain"
+        android:name="com.example.lnupvle.ui.fragments.main.FragmentMain"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSchedule"
-        android:name="com.example.lnupvle.FragmentSchedule"
+        android:name="com.example.lnupvle.ui.fragments.schedule.FragmentSchedule"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" >
         <action
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentChats"
-        android:name="com.example.lnupvle.FragmentChats"
+        android:name="com.example.lnupvle.ui.fragments.chat.FragmentChats"
         android:label="fragment_chats"
         tools:layout="@layout/fragment_chats" >
         <action
@@ -94,7 +94,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSettings"
-        android:name="com.example.lnupvle.FragmentSettings"
+        android:name="com.example.lnupvle.ui.fragments.settings.FragmentSettings"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action

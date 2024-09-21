@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FragmentChatsAdd">
+    tools:context=".ui.fragments.chat.FragmentChatsAdd">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="match_parent"

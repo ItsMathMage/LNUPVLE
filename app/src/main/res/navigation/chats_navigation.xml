@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentChatsMain"
-        android:name="com.example.lnupvle.FragmentChatsMain"
+        android:name="com.example.lnupvle.ui.fragments.chat.FragmentChatsMain"
         android:label="fragment_chats_main"
         tools:layout="@layout/fragment_chats_main" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentChatsCurrent"
-        android:name="com.example.lnupvle.FragmentChatsCurrent"
+        android:name="com.example.lnupvle.ui.fragments.chat.FragmentChatsCurrent"
         android:label="fragment_chats_current"
         tools:layout="@layout/fragment_chats_current" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentChatsAdd"
-        android:name="com.example.lnupvle.FragmentChatsAdd"
+        android:name="com.example.lnupvle.ui.fragments.chat.FragmentChatsAdd"
         android:label="fragment_chats_add"
         tools:layout="@layout/fragment_chats_add" >
         <action
