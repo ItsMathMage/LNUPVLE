@@ -1,9 +1,12 @@
 package com.example.lnupvle.ui.fragments.settings
 
+import android.app.Activity.RESULT_OK
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,8 +15,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.lnupvle.R
+import com.example.lnupvle.dataClass.Lecture
 import com.example.lnupvle.dataClass.User
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -59,21 +65,28 @@ class FragmentSettingsMain : Fragment() {
 
         getUserData()
 
-        val storageReference = FirebaseStorage.getInstance().getReference("app/Icons/profile.png")
+        getImage()
 
-        storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
-            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-
-            profileImageView.setImageBitmap(bitmap)
-        }.addOnFailureListener { exception ->
-            showToast("Firebase Error getting data " + exception.message.toString())
+        val pickFile = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()){
+            if (it.resultCode == RESULT_OK && it.data != null){
+                val uri = it.data!!.data
+                uploadFile(uri!!)
+            }
         }
 
+        val changeImageButton = view.findViewById<Button>(R.id.button_change_image)
         val copyUidButton = view.findViewById<Button>(R.id.button_copy_uid)
         val changeNameButton = view.findViewById<Button>(R.id.button_change_name)
         val changePasswordButton = view.findViewById<Button>(R.id.button_change_password)
         val changeEmailButton = view.findViewById<Button>(R.id.button_change_email)
         val changePhoneButton = view.findViewById<Button>(R.id.button_change_phone)
+
+        changeImageButton.setOnClickListener() {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            pickFile.launch(intent)
+        }
 
         copyUidButton.setOnClickListener() {
             val clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -121,6 +134,30 @@ class FragmentSettingsMain : Fragment() {
 
         return view
     }
+
+    private fun getImage() {
+        val storageReference = FirebaseStorage.getInstance().getReference("app/Icons/profile.png")
+
+        storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+            profileImageView.setImageBitmap(bitmap)
+        }.addOnFailureListener { exception ->
+            showToast("Firebase Error getting data " + exception.message.toString())
+        }
+    }
+    private fun uploadFile (uri: Uri) {
+        FirebaseStorage.getInstance().getReference("app")
+            .child("Images")
+            .putFile(uri)
+            .addOnSuccessListener {
+                showToast("Лекцію завантажено успішно")
+            }
+            .addOnFailureListener {
+                showToast("Не вдалося завантажити лекцію")
+            }
+    }
+
 
     private fun getUserData() {
         val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
