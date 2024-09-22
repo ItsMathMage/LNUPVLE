@@ -3,6 +3,7 @@ package com.example.lnupvle.ui.fragments.settings
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import com.example.lnupvle.R
 import com.example.lnupvle.dataClass.User
 import com.example.lnupvle.utilits.showToast
@@ -19,10 +21,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class FragmentSettingsMain : Fragment() {
 
     private lateinit var databaseRef: DatabaseReference
+
+    private lateinit var profileImageView: ImageView
 
     private lateinit var uidField: EditText
     private lateinit var firstnameField: EditText
@@ -44,6 +49,8 @@ class FragmentSettingsMain : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_settings_main, container, false)
 
+        profileImageView = view.findViewById(R.id.profile_image)
+
         uidField = view.findViewById(R.id.uid_field)
         firstnameField = view.findViewById(R.id.setting_firstname)
         lastnameField = view.findViewById(R.id.setting_lastname)
@@ -51,6 +58,16 @@ class FragmentSettingsMain : Fragment() {
         phoneField = view.findViewById(R.id.phone_field)
 
         getUserData()
+
+        val storageReference = FirebaseStorage.getInstance().getReference("app/Icons/profile.png")
+
+        storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+            profileImageView.setImageBitmap(bitmap)
+        }.addOnFailureListener { exception ->
+            showToast("Firebase Error getting data " + exception.message.toString())
+        }
 
         val copyUidButton = view.findViewById<Button>(R.id.button_copy_uid)
         val changeNameButton = view.findViewById<Button>(R.id.button_change_name)

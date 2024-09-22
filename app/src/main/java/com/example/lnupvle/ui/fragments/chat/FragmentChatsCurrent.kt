@@ -115,7 +115,7 @@ class FragmentChatsCurrent : Fragment() {
         val screen = view.findViewById<ConstraintLayout>(R.id.chat_layout)
 
         val params = screen.layoutParams as ViewGroup.MarginLayoutParams
-        params.setMargins(0, -100, 0, -100) // Лівий відступ 50dp
+        params.setMargins(0, -50, 0, -100)
         screen.layoutParams = params
     }
 
@@ -123,7 +123,6 @@ class FragmentChatsCurrent : Fragment() {
         val message = Message(username, messageText, type, time)
         val userRef = databaseRef.child("chat_messages").child(chatId)
         key = userRef.push().key.toString()
-        showToast(key)
         userRef.child(key).setValue(message)
         messageField.setText("")
     }

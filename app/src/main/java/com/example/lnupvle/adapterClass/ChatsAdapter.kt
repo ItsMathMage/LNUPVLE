@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lnupvle.R
@@ -44,6 +45,6 @@ class ChatsAdapter (
 
     class ChatsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val chatName: TextView = itemView.findViewById(R.id.chat_name)
-        val chatCardView: LinearLayout = itemView.findViewById(R.id.chat_card_layout)
+        val chatCardView: ConstraintLayout = itemView.findViewById(R.id.chat_card_layout)
     }
 }

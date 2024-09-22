@@ -53,7 +53,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:drawableStart="@drawable/baseline_menu_book_24"
+                            android:drawableStart="@drawable/baseline_123_24"
                             android:drawablePadding="8dp"
                             android:hint="Напишіть ID людини"
                             android:imeOptions="actionNext"
