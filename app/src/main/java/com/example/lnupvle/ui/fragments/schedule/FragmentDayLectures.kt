@@ -82,7 +82,7 @@ class FragmentDayLectures : Fragment() {
                         detailsArrayList.add( details!!)
                     }
 
-                    detailsRecyclerView.adapter = DetailsAdapter(detailsArrayList, getNav(), requireActivity())
+                    detailsRecyclerView.adapter = DetailsAdapter(detailsArrayList, requireActivity())
                 } else {
 
                 }

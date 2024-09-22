@@ -8,30 +8,46 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentContainer
+import androidx.fragment.app.FragmentContainerView
 import com.example.lnupvle.R
 import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 
 class FragmentMain : Fragment() {
+
+    private lateinit var chatButton: ImageButton
+    private lateinit var scheduleButton: ImageButton
+    private lateinit var lessonButton: ImageButton
+    private lateinit var settingsButton: ImageButton
+    private lateinit var logoutButton: ImageButton
+
+    private lateinit var frame: FragmentContainerView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
 
-        val chatButton = view.findViewById<ImageButton>(R.id.chat_button)
-        val scheduleButton = view.findViewById<ImageButton>(R.id.schedule_button)
-        val settingsButton = view.findViewById<ImageButton>(R.id.settings_button)
-        val logoutButton = view.findViewById<ImageButton>(R.id.logout_button)
+        frame = view.findViewById(R.id.fragmentFrameView)
+
+        chatButton = view.findViewById(R.id.chat_button)
+        scheduleButton = view.findViewById(R.id.schedule_button)
+        lessonButton = view.findViewById(R.id.lessons_button)
+        settingsButton = view.findViewById(R.id.settings_button)
+        logoutButton = view.findViewById(R.id.logout_button)
 
         startPerm()
 
         chatButton.setOnClickListener() {
             navigate(R.id.action_Main_to_Chats)
+
         }
 
         scheduleButton.setOnClickListener() {
@@ -42,11 +58,11 @@ class FragmentMain : Fragment() {
             navigate(R.id.action_Main_to_Settings)
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+        logoutButton.setOnClickListener() {
             logout()
         }
 
-        logoutButton.setOnClickListener() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             logout()
         }
 
@@ -54,6 +70,16 @@ class FragmentMain : Fragment() {
     }
 
     private val MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1
+
+    private fun changeButtons(button: ImageButton) {
+        chatButton.setBackgroundResource(R.drawable.transparent_button)
+        scheduleButton.setBackgroundResource(R.drawable.transparent_button)
+        lessonButton.setBackgroundResource(R.drawable.transparent_button)
+        settingsButton.setBackgroundResource(R.drawable.transparent_button)
+        logoutButton.setBackgroundResource(R.drawable.transparent_button)
+
+        button.setBackgroundResource(R.drawable.shaded_button)
+    }
 
     private fun startPerm() {
         if (checkWriteExternalStoragePermission()) {

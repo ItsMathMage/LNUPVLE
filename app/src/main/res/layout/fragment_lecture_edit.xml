@@ -110,6 +110,41 @@
             app:layout_constraintTop_toBottomOf="@+id/lecture_create_name"
             tools:layout_editor_absoluteX="30dp" />
 
+            <LinearLayout
+                android:id="@+id/type_files_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/lecture_create_id">
+                <Button
+                    android:id="@+id/button_set_docx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="docs"
+                    android:textColor="@color/black"
+                    android:background="@drawable/shaded_button"
+                    android:layout_margin="3dp"/>
+                <Button
+                    android:id="@+id/button_set_xlsx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:text="excel"
+                    android:textColor="@color/black"
+                    android:background="@drawable/round_button"/>
+                <Button
+                    android:id="@+id/button_set_pptx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="present"
+                    android:textColor="@color/black"
+                    android:background="@drawable/round_button"
+                    android:layout_margin="3dp"/>
+            </LinearLayout>
+
             <Button
             android:id="@+id/button_create_lecture"
             android:layout_width="match_parent"
@@ -118,7 +153,7 @@
             android:background="@drawable/round_button"
             android:text="Створити"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/lecture_create_id"
+            app:layout_constraintTop_toBottomOf="@+id/type_files_layout"
             tools:layout_editor_absoluteX="15dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
