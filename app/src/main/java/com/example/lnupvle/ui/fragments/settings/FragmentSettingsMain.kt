@@ -5,7 +5,10 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -32,6 +35,7 @@ import com.google.firebase.storage.FirebaseStorage
 class FragmentSettingsMain : Fragment() {
 
     private lateinit var databaseRef: DatabaseReference
+    private lateinit var userPref: SharedPreferences
 
     private lateinit var profileImageView: ImageView
 
@@ -41,11 +45,13 @@ class FragmentSettingsMain : Fragment() {
     private lateinit var emailField: EditText
     private lateinit var phoneField: EditText
 
+    private lateinit var uid: String
     private lateinit var userId: String
     private lateinit var firstname: String
     private lateinit var lastname: String
     private lateinit var email: String
     private lateinit var phone: String
+    private lateinit var image: String
 
     private lateinit var auth: FirebaseAuth
 
@@ -63,9 +69,16 @@ class FragmentSettingsMain : Fragment() {
         emailField = view.findViewById(R.id.email_field)
         phoneField = view.findViewById(R.id.phone_field)
 
+        userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+        uid = userPref.getString("UID", "").toString()
+
         getUserData()
 
-        getImage()
+        try {
+            getImage()
+        } catch (e: Exception) {
+            showToast(e.message.toString())
+        }
 
         val pickFile = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()){
@@ -102,8 +115,7 @@ class FragmentSettingsMain : Fragment() {
             if (firstnameChange.isEmpty() or lastnameChange.isEmpty()) {
                 showToast("Заповніть дані")
             } else {
-                val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
-                val uid = userPref.getString("UID", "").toString()
+
 
                 databaseRef = FirebaseDatabase.getInstance().getReference("app")
                 val userFirstnameRef = databaseRef.child("users").child(uid).child("firstname")
@@ -136,32 +148,60 @@ class FragmentSettingsMain : Fragment() {
     }
 
     private fun getImage() {
-        val storageReference = FirebaseStorage.getInstance().getReference("app/Icons/profile.png")
+        val userRef = databaseRef.child("users").child(uid)
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val user = dataSnapshot.getValue(User::class.java)
+                    if (user != null) {
+                        setImage(user.image)
+                    } else {
+                        showToast("Не вдалося отримати дані користувача")
+                    }
+                } else {
+                    showToast("Помилка отримання даних користувача")
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) { }
+        })
+    }
+
+    private fun setImage (image: String) {
+        val storageReference = FirebaseStorage.getInstance().getReference("app/profile_images/${image}")
 
         storageReference.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
             val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            val minSide = minOf(bitmap.width, bitmap.height)
+            val x = (bitmap.width - minSide) / 2
+            val y = (bitmap.height - minSide) / 2
+            val croppedBitmap = Bitmap.createBitmap(bitmap, x, y, minSide, minSide)
 
-            profileImageView.setImageBitmap(bitmap)
+            profileImageView.setImageBitmap(croppedBitmap)
+            profileImageView.setBackgroundResource(R.drawable.circle_shape)
+            profileImageView.clipToOutline = true
         }.addOnFailureListener { exception ->
             showToast("Firebase Error getting data " + exception.message.toString())
         }
     }
+
     private fun uploadFile (uri: Uri) {
         FirebaseStorage.getInstance().getReference("app")
-            .child("Images")
+            .child("profile_images/$uid")
             .putFile(uri)
             .addOnSuccessListener {
-                showToast("Лекцію завантажено успішно")
+                val userRef = databaseRef.child("users").child(uid).child("image")
+                userRef.setValue(uid)
+                showToast("Фото завантажено успішно")
+                getImage()
             }
             .addOnFailureListener {
-                showToast("Не вдалося завантажити лекцію")
+                showToast("Не вдалося завантажити фото")
             }
+
     }
 
 
     private fun getUserData() {
-        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
-        val uid = userPref.getString("UID", "").toString()
         databaseRef = FirebaseDatabase.getInstance().getReference("app")
 
         val usersRef = databaseRef.child("users").child(uid)
@@ -189,10 +229,7 @@ class FragmentSettingsMain : Fragment() {
                     showToast("Помилка отримання даних користувача")
                 }
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
+            override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 }

@@ -22,8 +22,6 @@ class LectureAdapter (
 )
     : RecyclerView.Adapter<LectureAdapter.LectureViewHolder>() {
 
-        private lateinit var filetype: String
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LectureViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.lecture_item, parent, false)
 
@@ -37,10 +35,10 @@ class LectureAdapter (
     override fun onBindViewHolder(holder: LectureViewHolder, position: Int) {
         val lecture = lecturesList[position]
 
-        filetype = lecture.lectureFormat
+        val filetype = lecture.lectureFormat
 
-        holder.lectureNameText.text = "Назва лекції: ${lecture.lectureName}"
-        holder.lectureIdText.text = "Ідентифікатор лекції: ${lecture.lectureId}"
+        holder.lectureNameText.text = lecture.lectureName
+        holder.lectureIdText.text = "Ідентифікатор: ${lecture.lectureId}"
 
         if (filetype == "docx") {
             holder.fileImageView.setImageResource(R.drawable.docx)
@@ -62,21 +60,21 @@ class LectureAdapter (
                 .child("Lessons/$lessonId/${lecture.lectureId}")
             storageRef.downloadUrl.addOnSuccessListener { uri ->
                 val filename = lecture.lectureName
-                startDownload(uri.toString(), filename)
+                startDownload(uri.toString(), filename, filetype)
             }.addOnFailureListener { exception ->
                 showToast("Не вдалося отримати url: $exception")
             }
         }
     }
 
-    private fun startDownload(url: String, filename: String) {
+    private fun startDownload(url: String, filename: String, filetype: String) {
         try {
             var downloadManager = context.getSystemService(DownloadManager::class.java)
             val request = DownloadManager.Request(url.toUri())
                 .setMimeType("*/*")
                 .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                .setTitle("$filename.$filetype")
+                .setTitle("$filename")
                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "$filename.$filetype")
             downloadManager.enqueue(request)
 

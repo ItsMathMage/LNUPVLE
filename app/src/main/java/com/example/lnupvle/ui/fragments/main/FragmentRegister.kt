@@ -69,7 +69,9 @@ class FragmentRegister : Fragment() {
                                             .child("users")
                                             .child(user.uid)
 
-                                        val userData = User(user.uid, firstname, lastname, email, phone)
+                                        val image = "profile"
+
+                                        val userData = User(user.uid, firstname, lastname, email, phone, image)
 
                                         userRef.setValue(userData)
 

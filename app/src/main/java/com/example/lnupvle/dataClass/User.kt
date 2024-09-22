@@ -6,8 +6,9 @@ class User (
     var lastname: String,
     var email: String,
     var phone: String,
+    var image: String
 ) {
-    constructor() : this("", "", "", "", "")
+    constructor() : this("", "", "", "", "", "")
 
     init {
         this.uid = uid
@@ -15,5 +16,6 @@ class User (
         this.lastname = lastname
         this.email = email
         this.phone = phone
+        this.image = image
     }
 }

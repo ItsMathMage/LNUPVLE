@@ -30,7 +30,7 @@ class LessonAdapter(
 
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
         val lesson = lessonsList[position]
-        holder.lessonNameText.text = "Назва предмету: ${lesson.lessonName}"
+        holder.lessonNameText.text = "Предмет: ${lesson.lessonName}"
         holder.lessonTeacherText.text = "Викладач: ${lesson.teacherName}"
 
         holder.cardLayout.setOnClickListener() {
