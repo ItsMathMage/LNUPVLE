@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
 import com.example.lnupvle.dataClass.Schedule
 import com.example.lnupvle.dataClass.ScheduleTempUser
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,15 +21,11 @@ import com.google.firebase.database.ValueEventListener
 
 class FragmentSheduleFind : Fragment() {
 
-    private lateinit var scheduleNav: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_shedule_find, container, false)
-
-        scheduleNav = findNavController()
 
         val scheduleIdField = view.findViewById<EditText>(R.id.schedule_id_field)
 
@@ -36,7 +33,7 @@ class FragmentSheduleFind : Fragment() {
         val findScheduleButton = view.findViewById<Button>(R.id.find_schedule_button)
 
         toBackButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleFind_to_ScheduleMain)
+            navigate(R.id.action_ScheduleFind_to_ScheduleMain)
         }
 
         findScheduleButton.setOnClickListener() {
@@ -66,10 +63,10 @@ class FragmentSheduleFind : Fragment() {
                             val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
                             val uid = userPref.getString("UID", "").toString()
                             val userScheduleRef = databaseRef.child("schedule_reference").child(uid).child(sheduleId)
-                            val scheduleTemp = ScheduleTempUser(sheduleId, schedule.scheduleGroup)
+                            val scheduleTemp = ScheduleTempUser(sheduleId, schedule.scheduleGroup, "student")
                             userScheduleRef.setValue(scheduleTemp)
                             showToast("Розклад додано успішно")
-                            scheduleNav.navigate(R.id.action_ScheduleFind_to_ScheduleMain)
+                            navigate(R.id.action_ScheduleFind_to_ScheduleMain)
                         }
                     }
                 }

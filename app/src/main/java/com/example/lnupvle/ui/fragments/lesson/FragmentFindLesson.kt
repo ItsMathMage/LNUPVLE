@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
 import com.example.lnupvle.dataClass.Access
 import com.example.lnupvle.dataClass.Lesson
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,15 +19,11 @@ import com.google.firebase.database.ValueEventListener
 
 class FragmentFindLesson : Fragment() {
 
-    private lateinit var frameNav: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_find_lesson, container, false)
-
-        frameNav = findNavController()
 
         val lessonIdField = view.findViewById<EditText>(R.id.lesson_id_field)
         val lessonPasswordField = view.findViewById<EditText>(R.id.lesson_password_field)
@@ -37,7 +32,7 @@ class FragmentFindLesson : Fragment() {
         val findLessonButton = view.findViewById<Button>(R.id.find_lesson_button)
 
         toBackButton.setOnClickListener() {
-            frameNav.navigate(R.id.action_FindLesson_to_Start)
+            navigate(R.id.action_FindLesson_to_Start)
         }
 
         findLessonButton.setOnClickListener() {
@@ -71,10 +66,10 @@ class FragmentFindLesson : Fragment() {
                         if (lesson != null) {
                             if (lessonPassword == lesson.lessonPassword) {
                                 val userAccessRef = databaseRef.child("access").child(uid).child(lessonId)
-                                val access = Access(uid, lessonId, lesson.lessonName, lesson.lessonTeacher)
+                                val access = Access(uid, lessonId, lesson.lessonName, lesson.lessonTeacher, "student")
                                 userAccessRef.setValue(access)
                                 showToast("Предмет додано успішно")
-                                frameNav.navigate(R.id.action_FindLesson_to_Start)
+                                navigate(R.id.action_FindLesson_to_Start)
                             }
                         }
                     }

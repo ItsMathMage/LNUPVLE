@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lnupvle.R
 import com.example.lnupvle.adapterClass.ChatsAdapter
 import com.example.lnupvle.dataClass.ChatsAccess
+import com.example.lnupvle.utilits.navigate
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -49,7 +50,7 @@ class FragmentChatsMain : Fragment() {
         val toAddChatButton = view.findViewById<Button>(R.id.to_add_chat)
 
         toAddChatButton.setOnClickListener() {
-            chatsNav.navigate(R.id.action_ChatsMain_to_ChatsAdd)
+            navigate(R.id.action_ChatsMain_to_ChatsAdd)
         }
 
         return view

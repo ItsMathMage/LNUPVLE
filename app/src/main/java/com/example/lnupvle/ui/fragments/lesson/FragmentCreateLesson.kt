@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
+import com.example.lnupvle.dataClass.Access
 import com.example.lnupvle.dataClass.Lesson
 import com.example.lnupvle.dataClass.User
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,16 +19,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class FragmentCreateLesson : Fragment() {
-
-    private lateinit var frameNav: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_create_lesson, container, false)
-
-        frameNav = findNavController()
 
         val lessonNameField = view.findViewById<EditText>(R.id.lesson_name_field)
         val lessonInfoField = view.findViewById<EditText>(R.id.lesson_info_field)
@@ -41,7 +36,7 @@ class FragmentCreateLesson : Fragment() {
         val createLessonButton = view.findViewById<Button>(R.id.create_lesson_button)
 
         toBackButton.setOnClickListener() {
-            frameNav.navigate(R.id.action_CreateLesson_to_Start)
+            navigate(R.id.action_CreateLesson_to_Start)
         }
 
         createLessonButton.setOnClickListener() {
@@ -86,7 +81,11 @@ class FragmentCreateLesson : Fragment() {
                             lessonRef.setValue(lessonData)
 
                             showToast("Предмет успішно створено")
-                            frameNav.navigate(R.id.action_CreateLesson_to_Start)
+                            navigate(R.id.action_CreateLesson_to_Start)
+
+                            val userAccessRef = databaseRef.child("access").child(uid).child(lessonId)
+                            val access = Access(uid, lessonId, lessonName, lessonTeacher, "teacher")
+                            userAccessRef.setValue(access)
                         }
                     } else {
 

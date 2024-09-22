@@ -9,15 +9,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
 import com.example.lnupvle.dataClass.Day
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.FirebaseDatabase
 
 class FragmentDaysEdit : Fragment() {
-
-    private lateinit var scheduleNav: NavController
     private lateinit var userPref: SharedPreferences
 
     override fun onCreateView(
@@ -25,8 +23,6 @@ class FragmentDaysEdit : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_days_edit, container, false)
-
-        scheduleNav = findNavController()
 
         val dayCreateField = view.findViewById<EditText>(R.id.schedule_create_day)
         val dayDeleteField = view.findViewById<EditText>(R.id.schedule_delete_day)
@@ -56,7 +52,7 @@ class FragmentDaysEdit : Fragment() {
         }
 
         toBackButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_DaysEdit_to_ScheduleDays)
+            navigate(R.id.action_DaysEdit_to_ScheduleDays)
         }
 
         return view
@@ -68,10 +64,12 @@ class FragmentDaysEdit : Fragment() {
             val sid = userPref.getString("SID", "").toString()
 
             val databaseRef = FirebaseDatabase.getInstance().getReference("app")
-            val scheduleRef = databaseRef.child("days").child(sid).child(dayName)
+            val scheduleRef = databaseRef.child("days").child(sid)
 
-            val day = Day(dayName)
-            scheduleRef.setValue(day)
+            val key = scheduleRef.push().key.toString()
+            val day = Day(dayName, key)
+
+            scheduleRef.child(key).setValue(day)
 
             showToast("День успішно створено")
 

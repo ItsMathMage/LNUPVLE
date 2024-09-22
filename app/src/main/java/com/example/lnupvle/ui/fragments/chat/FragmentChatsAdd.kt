@@ -14,6 +14,7 @@ import com.example.lnupvle.R
 import com.example.lnupvle.dataClass.ChatsAccess
 import com.example.lnupvle.dataClass.Message
 import com.example.lnupvle.dataClass.User
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,8 +25,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class FragmentChatsAdd : Fragment() {
-
-    private lateinit var chatsNav: NavController
     private lateinit var userPref: SharedPreferences
     private lateinit var databaseRef: DatabaseReference
 
@@ -34,8 +33,6 @@ class FragmentChatsAdd : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chats_add, container, false)
-
-        chatsNav = findNavController()
 
         val useridField = view.findViewById<EditText>(R.id.uid_field)
 
@@ -51,11 +48,11 @@ class FragmentChatsAdd : Fragment() {
 
             getUserName(chatId, otherId, myId)
 
-            chatsNav.navigate(R.id.action_ChatsAdd_to_ChatsMain)
+            navigate(R.id.action_ChatsAdd_to_ChatsMain)
         }
 
         toBackButton.setOnClickListener() {
-            chatsNav.navigate(R.id.action_ChatsAdd_to_ChatsMain)
+            navigate(R.id.action_ChatsAdd_to_ChatsMain)
         }
 
         return view

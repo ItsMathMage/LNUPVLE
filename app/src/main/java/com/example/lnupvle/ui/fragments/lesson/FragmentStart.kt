@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lnupvle.R
 import com.example.lnupvle.adapterClass.LessonAdapter
 import com.example.lnupvle.dataClass.Access
+import com.example.lnupvle.utilits.getNav
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
@@ -28,8 +30,6 @@ import com.google.firebase.database.ValueEventListener
 import java.util.concurrent.TimeUnit
 
 class FragmentStart : Fragment() {
-    private lateinit var frameNav: NavController
-
     private lateinit var databaseRef: DatabaseReference
     private lateinit var lessonsRecyclerView: RecyclerView
     private lateinit var lessonsArrayList: ArrayList<Access>
@@ -39,8 +39,6 @@ class FragmentStart : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_start, container, false)
-
-        frameNav = findNavController()
 
         val toFindLessonButton = view.findViewById<Button>(R.id.to_find_lesson_button)
         val toCreateLessonButton = view.findViewById<Button>(R.id.to_create_lesson_button)
@@ -53,11 +51,11 @@ class FragmentStart : Fragment() {
         getLessonData()
 
         toFindLessonButton.setOnClickListener() {
-            frameNav.navigate(R.id.action_Start_to_FindLesson)
+            navigate(R.id.action_Start_to_FindLesson)
         }
 
         toCreateLessonButton.setOnClickListener() {
-            frameNav.navigate(R.id.action_Start_to_CreateLesson)
+            navigate(R.id.action_Start_to_CreateLesson)
         }
 
         return view
@@ -79,7 +77,7 @@ class FragmentStart : Fragment() {
                         lessonsArrayList.add(lesson!!)
                     }
 
-                    lessonsRecyclerView.adapter = LessonAdapter(lessonsArrayList, frameNav, requireActivity())
+                    lessonsRecyclerView.adapter = LessonAdapter(lessonsArrayList, getNav(), requireActivity())
                 } else {
 
                 }

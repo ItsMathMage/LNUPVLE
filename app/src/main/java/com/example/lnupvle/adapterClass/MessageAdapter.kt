@@ -52,11 +52,8 @@ class MessageAdapter (
                     if (messages.user == username) {
                         holder.messageLayout.setBackgroundResource(R.color.light_blue)
                     }
-
                 }
-
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
 
             }

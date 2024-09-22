@@ -9,26 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 
 class FragmentMain : Fragment() {
-    private lateinit var navController: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
-
-        navController = findNavController()
-
-        val builder = AlertDialog.Builder(context)
-        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
 
         val chatButton = view.findViewById<ImageButton>(R.id.chat_button)
         val scheduleButton = view.findViewById<ImageButton>(R.id.schedule_button)
@@ -38,31 +31,23 @@ class FragmentMain : Fragment() {
         startPerm()
 
         chatButton.setOnClickListener() {
-            navController.navigate(R.id.action_Main_to_Chats)
+            navigate(R.id.action_Main_to_Chats)
         }
 
         scheduleButton.setOnClickListener() {
-            navController.navigate(R.id.action_Main_to_Schedule)
+            navigate(R.id.action_Main_to_Schedule)
         }
 
         settingsButton.setOnClickListener() {
-            navController.navigate(R.id.action_Main_to_Settings)
+            navigate(R.id.action_Main_to_Settings)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            logout()
         }
 
         logoutButton.setOnClickListener() {
-            builder.setTitle("Підтвердження")
-                .setMessage("Ви дійсно бажаєте вийти?")
-                .setPositiveButton("Так") { dialog, which ->
-                    val editor = userPref.edit()
-                    editor.putBoolean("ISLOGGEDIN", false)
-                    editor.apply()
-                    val temp = userPref.getBoolean("ISLOGGEDIN", false)
-                    navController.navigate(R.id.action_Main_to_Login)
-                }
-                .setNegativeButton("Ні") { dialog, which ->
-                    dialog.dismiss()
-                }
-                .show()
+            logout()
         }
 
         return view
@@ -76,6 +61,25 @@ class FragmentMain : Fragment() {
         } else {
             requestWriteExternalStoragePermission()
         }
+    }
+
+    private fun logout() {
+        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Підтвердження")
+            .setMessage("Ви дійсно бажаєте вийти?")
+            .setPositiveButton("Так") { dialog, which ->
+                val editor = userPref.edit()
+                editor.putBoolean("ISLOGGEDIN", false)
+                editor.apply()
+                val temp = userPref.getBoolean("ISLOGGEDIN", false)
+                navigate(R.id.action_Main_to_Login)
+            }
+            .setNegativeButton("Ні") { dialog, which ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun checkWriteExternalStoragePermission(): Boolean {

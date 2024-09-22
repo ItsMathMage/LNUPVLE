@@ -12,12 +12,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
 import com.example.lnupvle.dataClass.Details
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.FirebaseDatabase
 
 class FragmentDetailsEdit : Fragment() {
-
-    private lateinit var scheduleNav: NavController
     private lateinit var userPref: SharedPreferences
 
     override fun onCreateView(
@@ -26,7 +25,6 @@ class FragmentDetailsEdit : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_details_edit, container, false)
 
-        scheduleNav = findNavController()
 
         val detailsNameField = view.findViewById<EditText>(R.id.details_name)
         val detailsTeacherField = view.findViewById<EditText>(R.id.details_teacher)
@@ -67,7 +65,7 @@ class FragmentDetailsEdit : Fragment() {
         }
 
         toBackButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_DetailsEdit_to_DayLectures)
+            navigate(R.id.action_DetailsEdit_to_DayLectures)
         }
 
         return view
@@ -86,10 +84,11 @@ class FragmentDetailsEdit : Fragment() {
             val scheduleId = userPref.getString("SID", "").toString()
 
             val databaseRef = FirebaseDatabase.getInstance().getReference("app")
-            val scheduleRef = databaseRef.child("details").child(scheduleId).child(dayName).child(detailsName)
+            val scheduleRef = databaseRef.child("details").child(scheduleId)
+            val key = scheduleRef.push().key.toString()
 
-            val details = Details(detailsName.toString(), detailsTeacher, detailsTime, detailsPlace, detailsLink)
-            scheduleRef.setValue(details)
+            val details = Details(detailsName, detailsTeacher, detailsTime, detailsPlace, detailsLink, key)
+            scheduleRef.child(dayName).child(key).setValue(details)
 
             showToast("Деталі розкладу успішно додані")
 

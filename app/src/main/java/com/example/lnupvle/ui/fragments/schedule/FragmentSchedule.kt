@@ -10,18 +10,15 @@ import android.widget.ImageButton
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
+import com.example.lnupvle.utilits.navigate
 
 class FragmentSchedule : Fragment() {
-
-    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_schedule, container, false)
-
-        navController = findNavController()
 
         val builder = AlertDialog.Builder(context)
         val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
@@ -32,15 +29,15 @@ class FragmentSchedule : Fragment() {
         val logoutButton = view.findViewById<ImageButton>(R.id.logout_button)
 
         chatButton.setOnClickListener() {
-            navController.navigate(R.id.action_Schedule_to_Chats)
+            navigate(R.id.action_Schedule_to_Chats)
         }
 
         lessonButton.setOnClickListener() {
-            navController.navigate(R.id.action_Schedule_to_Main)
+            navigate(R.id.action_Schedule_to_Main)
         }
 
         settingsButton.setOnClickListener() {
-            navController.navigate((R.id.action_Schedule_to_Settings))
+            navigate((R.id.action_Schedule_to_Settings))
         }
 
         logoutButton.setOnClickListener() {
@@ -51,7 +48,7 @@ class FragmentSchedule : Fragment() {
                     editor.putBoolean("ISLOGGEDIN", false)
                     editor.apply()
                     val temp = userPref.getBoolean("ISLOGGEDIN", false)
-                    navController.navigate(R.id.action_Schedule_to_Login)
+                    navigate(R.id.action_Schedule_to_Login)
                 }
                 .setNegativeButton("Ні") { dialog, which ->
                     dialog.dismiss()

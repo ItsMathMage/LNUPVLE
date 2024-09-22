@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lnupvle.R
 import com.example.lnupvle.adapterClass.DetailsAdapter
 import com.example.lnupvle.dataClass.Details
+import com.example.lnupvle.utilits.getNav
+import com.example.lnupvle.utilits.navigate
+import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,22 +25,21 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class FragmentDayLectures : Fragment() {
-
-    private lateinit var scheduleNav: NavController
     private lateinit var userPref : SharedPreferences
     private lateinit var databaseRef: DatabaseReference
     private lateinit var detailsArrayList: ArrayList<Details>
     private lateinit var detailsRecyclerView: RecyclerView
 
+    private lateinit var role: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        scheduleNav = findNavController()
-
         val view = inflater.inflate(R.layout.fragment_day_lectures, container, false)
 
         userPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        role = userPref.getString("SA", "").toString()
 
         detailsArrayList = arrayListOf<Details>()
         detailsRecyclerView = view.findViewById(R.id.lectures_list)
@@ -50,11 +52,15 @@ class FragmentDayLectures : Fragment() {
         val toEditButton = view.findViewById<Button>(R.id.to_edit_button)
 
         toBackButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_DayLectures_to_ScheduleDays)
+            navigate(R.id.action_DayLectures_to_ScheduleDays)
         }
 
         toEditButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_DayLectures_to_DetailsEdit)
+            if (role == "student") {
+                showToast("Лекціями керувати може тільки викладач")
+            } else {
+                navigate(R.id.action_DayLectures_to_DetailsEdit)
+            }
         }
 
         return view
@@ -76,7 +82,7 @@ class FragmentDayLectures : Fragment() {
                         detailsArrayList.add( details!!)
                     }
 
-                    detailsRecyclerView.adapter = DetailsAdapter(detailsArrayList, scheduleNav, requireActivity())
+                    detailsRecyclerView.adapter = DetailsAdapter(detailsArrayList, getNav(), requireActivity())
                 } else {
 
                 }

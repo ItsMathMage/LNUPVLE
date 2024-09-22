@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lnupvle.R
 import com.example.lnupvle.adapterClass.LectureAdapter
 import com.example.lnupvle.dataClass.Lecture
+import com.example.lnupvle.utilits.navigate
+import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,20 +22,18 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
 class FragmentLesson : Fragment() {
-    private lateinit var frameNav: NavController
     private lateinit var storageRef: StorageReference
-
     private lateinit var databaseRef: DatabaseReference
     private lateinit var lecturesArrayList: ArrayList<Lecture>
     private lateinit var lecturesRecyclerView: RecyclerView
+
+    private lateinit var lessonRole: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_lesson, container, false)
-
-        frameNav = findNavController()
 
         storageRef = FirebaseStorage.getInstance().getReference("test")
 
@@ -50,12 +48,15 @@ class FragmentLesson : Fragment() {
         getLectureData()
 
         toBackButton.setOnClickListener() {
-            frameNav.navigate(R.id.action_Lesson_to_Start)
+            navigate(R.id.action_Lesson_to_Start)
         }
 
         createLectureButton.setOnClickListener() {
-
-            frameNav.navigate(R.id.action_Lesson_to_LectureEdit)
+            if (lessonRole == "student") {
+                showToast("Лекціями керувати може тільки викладач")
+            } else {
+                navigate(R.id.action_Lesson_to_LectureEdit)
+            }
         }
 
         return view.rootView
@@ -64,6 +65,7 @@ class FragmentLesson : Fragment() {
     private fun getLectureData() {
         val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
         val lid = userPref.getString("LID", "").toString()
+        lessonRole = userPref.getString("LA", "").toString()
 
         databaseRef = FirebaseDatabase.getInstance().getReference("app")
         val lecturesRef = databaseRef.child("lectures").child(lid)

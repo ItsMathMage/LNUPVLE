@@ -11,15 +11,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
 import com.example.lnupvle.dataClass.User
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.database
 
 class FragmentRegister : Fragment() {
-
-    private lateinit var navController: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,8 +25,6 @@ class FragmentRegister : Fragment() {
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
         val auth = FirebaseAuth.getInstance()
-
-        navController = findNavController()
 
         val firstnameField = view.findViewById<EditText>(R.id.firstname_field)
         val lastnameField = view.findViewById<EditText>(R.id.lastname_field)
@@ -41,7 +37,7 @@ class FragmentRegister : Fragment() {
         val registerButton = view.findViewById<Button>(R.id.register_button)
 
         buttonToLogin.setOnClickListener() {
-            navController.navigate(R.id.action_Register_to_Login)
+            navigate(R.id.action_Register_to_Login)
         }
 
         registerButton.setOnClickListener() {
@@ -77,7 +73,7 @@ class FragmentRegister : Fragment() {
 
                                         userRef.setValue(userData)
 
-                                        navController.navigate(R.id.action_Register_to_Login)
+                                        navigate(R.id.action_Register_to_Login)
                                     } else {
                                         showToast("Виникла помилка при відправленні листа на пошту")
                                     }

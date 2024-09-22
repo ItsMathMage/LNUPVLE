@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lnupvle.R
 import com.example.lnupvle.adapterClass.ScheduleAdapter
 import com.example.lnupvle.dataClass.ScheduleTempUser
+import com.example.lnupvle.utilits.getNav
+import com.example.lnupvle.utilits.navigate
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -20,9 +22,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class FragmentScheduleMain : Fragment() {
-
-    private lateinit var scheduleNav: NavController
-
     private lateinit var databaseRef: DatabaseReference
     private lateinit var scheduleArrayList: ArrayList<ScheduleTempUser>
     private lateinit var scheduleRecyclerView: RecyclerView
@@ -32,8 +31,6 @@ class FragmentScheduleMain : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_schedule_main, container, false)
-
-        scheduleNav = findNavController()
 
         scheduleArrayList = arrayListOf<ScheduleTempUser>()
         scheduleRecyclerView = view.findViewById(R.id.schedule_list)
@@ -46,11 +43,11 @@ class FragmentScheduleMain : Fragment() {
         getScheduleData()
 
         findScheduleButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleMain_to_SheduleFind)
+            navigate(R.id.action_ScheduleMain_to_SheduleFind)
         }
 
         editScheduleButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleMain_to_ScheduleEdit)
+            navigate(R.id.action_ScheduleMain_to_ScheduleEdit)
         }
 
         return  view
@@ -72,7 +69,7 @@ class FragmentScheduleMain : Fragment() {
                         scheduleArrayList.add(schedule!!)
                     }
 
-                    scheduleRecyclerView.adapter = ScheduleAdapter(scheduleArrayList, scheduleNav, requireActivity())
+                    scheduleRecyclerView.adapter = ScheduleAdapter(scheduleArrayList, getNav(), requireActivity())
                 } else {
 
                 }

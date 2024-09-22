@@ -8,16 +8,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class FragmentLogin : Fragment() {
-
-    private lateinit var navController: NavController
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -25,8 +22,6 @@ class FragmentLogin : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
-
-        navController = findNavController()
 
         val userPref = requireContext().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
         var isLoggedIn = userPref.getBoolean("ISLOGGEDIN", false)
@@ -56,11 +51,11 @@ class FragmentLogin : Fragment() {
         }
 
         buttonToRegister.setOnClickListener() {
-            navController.navigate(R.id.action_Login_to_Register)
+            navigate(R.id.action_Login_to_Register)
         }
 
         toResetPassword.setOnClickListener() {
-            navController.navigate(R.id.action_Login_to_Reset)
+            navigate(R.id.action_Login_to_Reset)
         }
 
         return view
@@ -81,7 +76,7 @@ class FragmentLogin : Fragment() {
                         editor.putString("PASS", password)
                         editor.putBoolean("ISLOGGEDIN", true)
                         editor.apply()
-                        navController.navigate(R.id.action_Login_to_Main)
+                        navigate(R.id.action_Login_to_Main)
                     } else {
                         showToast("Обліковий запис не підтверджений")
                     }

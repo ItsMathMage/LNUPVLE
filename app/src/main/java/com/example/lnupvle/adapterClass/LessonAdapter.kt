@@ -37,6 +37,7 @@ class LessonAdapter(
             val userPref : SharedPreferences = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
             val editor: SharedPreferences.Editor = userPref.edit()
             editor.putString("LID", lesson.lessonId)
+            editor.putString("LA", lesson.role)
             editor.apply()
             frameNav.navigate(R.id.action_Start_to_Lesson)
         }

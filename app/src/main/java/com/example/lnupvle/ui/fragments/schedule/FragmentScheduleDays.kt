@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lnupvle.R
 import com.example.lnupvle.adapterClass.DayAdapter
 import com.example.lnupvle.dataClass.Day
+import com.example.lnupvle.utilits.getNav
+import com.example.lnupvle.utilits.navigate
+import com.example.lnupvle.utilits.showToast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,12 +25,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class FragmentScheduleDays : Fragment() {
-
-    private lateinit var scheduleNav: NavController
     private lateinit var userPref : SharedPreferences
     private lateinit var databaseRef: DatabaseReference
     private lateinit var daysArrayList: ArrayList<Day>
     private lateinit var daysRecyclerView: RecyclerView
+
+    private lateinit var role: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +40,7 @@ class FragmentScheduleDays : Fragment() {
 
         userPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
-        scheduleNav = findNavController()
+        role = userPref.getString("SA", "").toString()
 
         daysArrayList = arrayListOf<Day>()
         daysRecyclerView = view.findViewById(R.id.days_list)
@@ -50,11 +53,15 @@ class FragmentScheduleDays : Fragment() {
         val toEditButton = view.findViewById<Button>(R.id.to_edit_button)
 
         toBackButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleDays_to_ScheduleMain)
+            navigate(R.id.action_ScheduleDays_to_ScheduleMain)
         }
 
         toEditButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleDays_to_DaysEdit)
+            if (role == "student") {
+                showToast("Ви не можете редагувати розклад")
+            } else {
+                navigate(R.id.action_ScheduleDays_to_DaysEdit)
+            }
         }
 
         return view
@@ -75,7 +82,7 @@ class FragmentScheduleDays : Fragment() {
                         daysArrayList.add(day!!)
                     }
 
-                    daysRecyclerView.adapter = DayAdapter(daysArrayList, scheduleNav, requireActivity())
+                    daysRecyclerView.adapter = DayAdapter(daysArrayList, getNav(), requireActivity())
                 } else {
 
                 }

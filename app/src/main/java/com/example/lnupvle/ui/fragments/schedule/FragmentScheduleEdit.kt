@@ -10,21 +10,23 @@ import android.widget.EditText
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.lnupvle.R
+import com.example.lnupvle.dataClass.Access
 import com.example.lnupvle.dataClass.Schedule
+import com.example.lnupvle.dataClass.ScheduleTempUser
+import com.example.lnupvle.utilits.navigate
 import com.example.lnupvle.utilits.showToast
+import com.google.android.material.color.ColorRoles
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class FragmentScheduleEdit : Fragment() {
-
-    private lateinit var scheduleNav: NavController
+    private lateinit var databaseRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_schedule_edit, container, false)
-
-        scheduleNav = findNavController()
 
         val scheduleIdField = view.findViewById<EditText>(R.id.schedule_create_id)
         val scheduleGroupField = view.findViewById<EditText>(R.id.schedule_create_group)
@@ -42,6 +44,8 @@ class FragmentScheduleEdit : Fragment() {
                 showToast("Заповніть поля для створення")
             } else {
                 createSchedule(scheduleId, scheduleGroup)
+                createAccess(scheduleId, scheduleGroup, "creator")
+                navigate(R.id.action_ScheduleEdit_to_ScheduleMain)
             }
         }
 
@@ -56,22 +60,30 @@ class FragmentScheduleEdit : Fragment() {
         }
 
         toBackButton.setOnClickListener() {
-            scheduleNav.navigate(R.id.action_ScheduleEdit_to_ScheduleMain)
+            navigate(R.id.action_ScheduleEdit_to_ScheduleMain)
         }
 
         return view
     }
 
+    private fun createAccess(scheduleId: String, scheduleGroup: String, scheduleRole: String) {
+        val userPref = requireActivity().getSharedPreferences("UserPref", android.content.Context.MODE_PRIVATE)
+        databaseRef = FirebaseDatabase.getInstance().getReference("app")
+        val uid = userPref.getString("UID", "").toString()
+        val accessRef = databaseRef.child("schedule_reference").child(uid).child(scheduleId)
+        val access = ScheduleTempUser(scheduleId, scheduleGroup, scheduleRole)
+        accessRef.setValue(access)
+    }
+
     private fun createSchedule(scheduleId: String, scheduleGroup: String) {
         try {
-            val databaseRef = FirebaseDatabase.getInstance().getReference("app")
+            databaseRef = FirebaseDatabase.getInstance().getReference("app")
             val scheduleRef = databaseRef.child("schedule").child(scheduleId)
 
             val scheduleData = Schedule(scheduleId, scheduleGroup)
             scheduleRef.setValue(scheduleData)
 
             showToast("Розклад успішно створено")
-            scheduleNav.navigate(R.id.action_ScheduleEdit_to_ScheduleMain)
 
         } catch (e: Exception) {
             showToast("Помилка")
@@ -86,7 +98,7 @@ class FragmentScheduleEdit : Fragment() {
             scheduleRef.removeValue()
 
             showToast("Розклад успішно видалено")
-            scheduleNav.navigate(R.id.action_ScheduleEdit_to_ScheduleMain)
+            navigate(R.id.action_ScheduleEdit_to_ScheduleMain)
 
         } catch (e: Exception) {
             showToast("Помилка: ${e.message}")

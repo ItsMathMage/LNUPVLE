@@ -1,14 +1,22 @@
 package com.example.lnupvle.ui.fragments.chat
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +32,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
+import kotlin.math.floor
+import kotlin.math.roundToInt
 
 class FragmentChatsCurrent : Fragment() {
-
-    private lateinit var chatsNav: NavController
     private lateinit var userPref : SharedPreferences
     private lateinit var databaseRef: DatabaseReference
     private lateinit var messageList: ArrayList<Message>
@@ -37,25 +45,27 @@ class FragmentChatsCurrent : Fragment() {
 
     private lateinit var key: String
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chats_current, container, false)
 
-        chatsNav = findNavController()
         userPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 
         messageField = view.findViewById(R.id.message_field)
+
         val sendButton = view.findViewById<ImageButton>(R.id.button_send)
 
         messageList = arrayListOf<Message>()
         messageRecyclerView = view.findViewById(R.id.message_list)
         messageRecyclerView.layoutManager = LinearLayoutManager(context)
         messageRecyclerView.setHasFixedSize(true)
-        messageRecyclerView
 
         getMessageData()
+
+        getScreen(view)
 
         sendButton.setOnClickListener() {
             val uid = userPref.getString("UID", "").toString()
@@ -86,11 +96,27 @@ class FragmentChatsCurrent : Fragment() {
 
                 }
             })
-
-
         }
 
         return view
+    }
+
+    private fun getScreen(view: View) {
+//        val displayMetrics = context?.resources?.displayMetrics ?: return
+//
+//        val screenHeight = displayMetrics.heightPixels.toDouble()
+//        val screenWidth = displayMetrics.widthPixels.toDouble()
+//
+//        val aspectRatio = screenHeight / screenWidth
+//        val temp = aspectRatio.toString()
+//        val number = temp.substring(0..2)
+//        val cof = number.toDouble()
+
+        val screen = view.findViewById<ConstraintLayout>(R.id.chat_layout)
+
+        val params = screen.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(0, -100, 0, -100) // Лівий відступ 50dp
+        screen.layoutParams = params
     }
 
     private fun sendMessage(username: String, messageText: String, type: String, time: String, chatId: String) {

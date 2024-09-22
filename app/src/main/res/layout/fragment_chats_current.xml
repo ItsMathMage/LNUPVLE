@@ -7,8 +7,11 @@
     tools:context=".ui.fragments.chat.FragmentChatsCurrent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chat_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        android:fitsSystemWindows="true">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/message_list"
@@ -18,7 +21,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/message_item" />
+            tools:listitem="@layout/message_item"
+            android:descendantFocusability="afterDescendants"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottom_bar"
@@ -34,12 +38,14 @@
                 android:id="@+id/message_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_message_24"
                 android:hint="Введіть повідомлення"
+                android:inputType="textPassword"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_send"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:windowSoftInputMode="adjustPan"
+                />
 
             <ImageButton
                 android:id="@+id/button_send"
@@ -50,7 +56,8 @@
                 android:src="@drawable/baseline_send_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:lines="1"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

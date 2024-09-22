@@ -37,6 +37,7 @@ class ScheduleAdapter (
                 val userPref : SharedPreferences = context.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
                 val editor: SharedPreferences.Editor = userPref.edit()
                 editor.putString("SID", schedule.scheduleId)
+                editor.putString("SA", schedule.role)
                 editor.apply()
                 scheduleNav.navigate(R.id.action_ScheduleMain_to_ScheduleDays)
             }
